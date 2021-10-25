@@ -3,66 +3,62 @@ package com.myself.argo;
 import java.util.*;
 
 public class A1260 {
-    static int n;
-    static int m;
-    static int v;
-    static int[][] graph;
-    static boolean[] check;
+    static int T; //test case
+    static int M; // 가로길이
+    static int N; // 세로 길이
+    static int K; // 배추 갯수
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
 
-    public static void main(String[] args) {
+    static int[][] graph; //배추의 좌표 -> for문으로 0~<K만큼 돌리기.
 
-        Scanner sc = new Scanner(System.in);
-        System.out.print("정점입력");
-        n = sc.nextInt();
-        System.out.print("간선입력");
-        m = sc.nextInt();
-        System.out.print("startNum 입력");
-        v = sc.nextInt();
-        graph = new int[n + 1][n + 1];
-        check = new boolean[n + 1];
-        for (int i = 0; i < m; i++) {
-            System.out.print("x입력");
-            int x = sc.nextInt();
-            System.out.print("y입력");
-            int y = sc.nextInt();
-
-            graph[x][y] = 1;
-            graph[y][x] = 1;
-        }
-
-        dfs(v);
-        System.out.println();
-        Arrays.fill(check, false);
-        bfs(v);
-        sc.close();
-    }
-
-    private static void dfs(int start) {
-        check[start] = true;
-
-        System.out.print(start + " ");
-
-        for (int i = 1; i < graph.length; i++) {
-            if (graph[start][i] == 1 && !check[i]) {
-                dfs(i);
-            }
-        }
-    }
-
-    private static void bfs(int start) {
-        Queue<Integer> q = new LinkedList<>();
-        q.offer(start);
-        check[start] = true;
-        System.out.print(start+" ");
-        while (!q.isEmpty()) {
-            int vertex = q.poll();
-            for (int i = 1; i < graph.length; i++) {
-                if (graph[vertex][i] == 1 && !check[i]) {
-                    q.offer(i);
-                    check[i] = true;
-                    System.out.print(i+" ");
+    public static void dfs(int i, int j) {
+        graph[i][j] = 0;
+        for (int x = 0; x < dx.length; x++) {
+            int nx = i + dx[x];
+            int ny = j + dy[x];
+            if (nx >= 0 && ny >= 0 && nx < M && ny < N) {
+                if (graph[nx][ny] == 1) {
+                    dfs(nx, ny);
                 }
             }
         }
+
     }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("testcase : ");
+        T = sc.nextInt();
+        for (int t = 0; t < T; t++) {
+            int sum = 0;
+            System.out.print("가로길이 : ");
+            M = sc.nextInt();
+            System.out.print("세로길이 : ");
+            N = sc.nextInt();
+            System.out.print("배추의 갯수 : ");
+            K = sc.nextInt();
+            graph = new int[M][N];
+
+            for (int i = 0; i < K; i++) {
+                System.out.print("x좌표 : ");
+                int x = sc.nextInt();
+                System.out.print("y좌표 : ");
+                int y = sc.nextInt();
+                graph[x][y] = 1;
+            }
+            for (int i = 0; i < M; i++) {
+                for (int j = 0; j < N; j++) {
+                    if (graph[i][j] == 1) {
+                        dfs(i, j);
+                        sum++;
+                    }
+                }
+            }
+            System.out.println(sum);
+        }
+
+
+    }
+
 }
