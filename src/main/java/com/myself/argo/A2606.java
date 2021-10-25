@@ -31,7 +31,7 @@ public class A2606 {
             System.out.println(sum);
     }
 
-    public static void dfs(int start){
+    private static void dfs(int start){
 
             visited[start] = true;
 

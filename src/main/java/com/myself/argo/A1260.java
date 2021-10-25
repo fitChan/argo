@@ -12,7 +12,7 @@ public class A1260 {
 
     static int[][] graph; //배추의 좌표 -> for문으로 0~<K만큼 돌리기.
 
-    public static void dfs(int i, int j) {
+    private static void dfs(int i, int j) {
         graph[i][j] = 0;
         for (int x = 0; x < dx.length; x++) {
             int nx = i + dx[x];
