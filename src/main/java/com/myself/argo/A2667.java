@@ -1,5 +1,7 @@
 package com.myself.argo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class A2667 {
@@ -7,8 +9,9 @@ public class A2667 {
     static int[] dx = {1, 0, -1, 0};
     static int[] dy = {0, 1, 0, -1};
     static int[][] house;
-
-    private static void dfs(int i, int j) {
+    static ArrayList<Integer> result;
+    static int  sum;
+    private static int dfs(int i, int j) {
         house[i][j] = 0;
         for (int x = 0; x < dx.length; x++) {
             int nx = i + dx[x];
@@ -17,9 +20,11 @@ public class A2667 {
             if (nx >= 0 && ny >= 0 && nx < N && ny < N) {
                 if (house[nx][ny] == 1) {
                     dfs(nx, ny);
+                    sum++;
                 }
             }
         }
+        return sum;
     }
 
     public static void main(String[] args) {
@@ -31,16 +36,20 @@ public class A2667 {
                 house[i][j] = sc.nextInt();
             }
         }
-        int sum = 0;
+        sum = 0;
+        result = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (house[i][j] == 1) {
+                    sum=1;
                     dfs(i, j);
-                    sum++;
-
+                    result.add(sum);
                 }
             }
         }
-        System.out.println(sum);
+        Collections.sort(result);
+        System.out.println(result.size());
+
+        for(int c: result) System.out.println(c);
     }
 }
