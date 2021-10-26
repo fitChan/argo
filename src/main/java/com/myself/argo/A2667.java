@@ -11,7 +11,8 @@ public class A2667 {
     static int[][] house;
     static ArrayList<Integer> result;
     static int  sum;
-    private static int dfs(int i, int j) {
+
+    private static void dfs(int i, int j) {
         house[i][j] = 0;
         for (int x = 0; x < dx.length; x++) {
             int nx = i + dx[x];
@@ -24,7 +25,6 @@ public class A2667 {
                 }
             }
         }
-        return sum;
     }
 
     public static void main(String[] args) {
@@ -32,10 +32,12 @@ public class A2667 {
         N = sc.nextInt();
         house = new int[N][N];
         for (int i = 0; i < N; i++) {
+            String input = sc.next();
             for (int j = 0; j < N; j++) {
-                house[i][j] = sc.nextInt();
+                house[i][j] = input.charAt(j)-'0';
             }
         }
+        sc.close();
         sum = 0;
         result = new ArrayList<>();
         for (int i = 0; i < N; i++) {
@@ -47,6 +49,7 @@ public class A2667 {
                 }
             }
         }
+
         Collections.sort(result);
         System.out.println(result.size());
 
