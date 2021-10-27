@@ -1,76 +1,58 @@
 package com.myself.argo;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
-class Dot {
-    int x, y;
-
-    public Dot(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 public class A2667 {
-    static int[][] miro;
-    static boolean[][] visited;
-    static int n;
-    static int m;
-    static int[] dx = {-1, 0, 1, 0};
-    static int[] dy = {0, -1, 0, 1};
+    static int N; //정사각형임. 가로세로 이거로.
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static int[][] house;
+    static ArrayList<Integer> result;
+    static int  sum;
 
-    public static void bfs(int x, int y) {
-        Queue<Dot> q = new LinkedList<Dot>();
-        q.add(new Dot(x, y));
-        visited[x][y] = true;
+    private static void dfs(int i, int j) {
+        house[i][j] = 0;
+        for (int x = 0; x < dx.length; x++) {
+            int nx = i + dx[x];
+            int ny = j + dy[x];
 
-        while (!q.isEmpty()) {
-            Dot d = q.poll();
-            for (int i = 0; i < 4; i++) {
-                int nx = d.x + dx[i];
-                int ny = d.y + dy[i];
-
-                if (nx < 0 || ny < 0 || nx >= n || ny >= m)
-                    continue;
-
-                if (visited[nx][ny])
-                    continue;
-
-                if (miro[nx][ny] == 0)
-                    continue;
-
-
-                q.add(new Dot(nx, ny));
-                visited[nx][ny] = true;
-                miro[nx][ny] = miro[d.x][d.y] + 1;
+            if (nx >= 0 && ny >= 0 && nx < N && ny < N) {
+                if (house[nx][ny] == 1) {
+                    dfs(nx, ny);
+                    sum++;
+                }
             }
         }
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        n = sc.nextInt();
-        m = sc.nextInt();
-
-        sc.nextLine();
-
-        miro = new int[n][m];
-        visited = new boolean[n][m];
-
-        for (int i = 0; i < n; i++) {
-            String input = sc.nextLine();
-            for (int j = 0; j < m; j++) {
-                miro[i][j] = input.charAt(j) - '0';
+        N = sc.nextInt();
+        house = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            String input = sc.next();
+            for (int j = 0; j < N; j++) {
+                house[i][j] = input.charAt(j)-'0';
+            }
+        }
+        sc.close();
+        sum = 0;
+        result = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (house[i][j] == 1) {
+                    sum=1;
+                    dfs(i, j);
+                    result.add(sum);
+                }
             }
         }
 
-        bfs(0, 0);
-        System.out.println(miro[n - 1][m - 1]);
+        Collections.sort(result);
+        System.out.println(result.size());
 
-        sc.close();
+        for(int c: result) System.out.println(c);
     }
 }
-
