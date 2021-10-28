@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class A1697 {
     static int n;
     static int k;
-    static int[] count = new int[10001];
+    static int[] count = new int[100001];
 
 
     public static void bfs() {
