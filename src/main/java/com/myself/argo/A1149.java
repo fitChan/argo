@@ -37,7 +37,7 @@ public class A1149 {
         DP[0][Red] = houseColor[0][Red];
         DP[0][Green] = houseColor[0][Green];
         DP[0][Blue] = houseColor[0][Blue];
-
+        System.out.println();
         System.out.println(Math.min(sum(testCase-1, Red), Math.min(sum(testCase-1, Green), sum(testCase-1, Blue))));
 
     }
