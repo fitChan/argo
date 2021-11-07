@@ -35,21 +35,25 @@ public class main2 {
         if(realHour>9){
             if(realMin>9) {
                 String answer = realHour + ":" + realMin;
+                System.out.println(answer);
                 return answer;
             }else{
                 String answer = realHour + ":" +"0"+realMin;
+                System.out.println(answer);
                 return answer;
             }
 
         }else {
             if(realMin>9) {
-                String answer = realHour + ":" + realMin;
+                String answer = "0"+realHour + ":" + realMin;
+                System.out.println(answer);
                 return answer;
             }else{
-                String answer = realHour + ":" +"0"+realMin;
+                String answer = "0"+realHour + ":" +"0"+realMin;
+                System.out.println(answer);
                 return answer;
-            }
 
+            }
         }
 
 
