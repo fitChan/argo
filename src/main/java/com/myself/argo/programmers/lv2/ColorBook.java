@@ -25,7 +25,7 @@ public class ColorBook {
 
     }
 
-    public int[] solution(int m, int n, int[][] picture) {
+    public static int[] solution(int m, int n, int[][] picture) {
         int numberOfArea = 0;
         int maxSizeOfOneArea = 0;
         int[] answer = new int[2];
@@ -38,18 +38,20 @@ public class ColorBook {
                     numberOfArea++;
                     dfs(i,j,picture,visited);
                 }
+                if(eachNum>maxSizeOfOneArea){
+                    maxSizeOfOneArea = eachNum;
+                }
+                eachNum = 0;
             }
         }
 
-        if(eachNum>maxSizeOfOneArea){
-            maxSizeOfOneArea = eachNum;
-        }
-        eachNum = 0;
+
 
         answer[0] = numberOfArea;
         answer[1] = maxSizeOfOneArea;
 
-
+        System.out.println(answer[0]);
+        System.out.println(answer[1]);
         return answer;
     }
 
@@ -58,5 +60,6 @@ public class ColorBook {
         int n = 4;
 
         int[][] pic = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
+        solution(m,n,pic);
     }
 }
