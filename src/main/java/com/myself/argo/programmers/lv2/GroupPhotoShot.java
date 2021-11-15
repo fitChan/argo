@@ -14,7 +14,7 @@ public class GroupPhotoShot {
         map = new HashMap<>();
         visited = new boolean[8];
         ch = new int[8];
-        int answer = 0;
+        answer = 0;
         map.put('A', 0);
         map.put('C', 1);
         map.put('F', 2);
@@ -56,7 +56,7 @@ public static void dfs(int idx){
                     return false;
             }else if(c == '>'){
                 if(Math.abs(x-y)<=res){
-                    return true;
+                    return false;
                 }
             }else {
                 if(Math.abs(x-y)>= res){
