@@ -1,53 +1,80 @@
 package com.myself.argo.withTaeHtun;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 
 public class CoupleBrownCony {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int cony = sc.nextInt();
-        int brown = sc.nextInt();
-        int[] pos = new int[200001];
+    //x-n는 +1, -1, *2
+    //y-k 는 +1, +2, +3, +4 ,,,,,,,,,,+y[n-1]+1
+    public static int bfs(int x, int y) {
+        boolean[][] visited = new boolean[500001][2];
+        int time = 0;
+        Queue<int[]> q = new LinkedList<>();
+        if (x == y) {
+            return time;
+        }
+        q.add(new int[]{x, 0});
+        int back, front, jump;
+        int queue = 0;
+        int nowX;
+        int nowTime;
+        int[] now;
+        while(true){
+            ++time;
+            y = time+y; //전에 움직였던거 +해줘야 현재의 y가 될것임. 계속 움직이니까.
 
-        int answer = -1;
-
-        Queue<Integer> q = new LinkedList<>();
-        q.add(brown);
-
-        while (true) {
-            int num = q.poll();
-
-            int time = pos[num];
-            int conyMove = 0;
-            for (int i = 1; i <= time; i++) {
-                conyMove += i;
+            if(y>500000){
+                return -1;   //y는 계속 가는데 범위를 벗어나는 순간 못만나는 것으로 치고 -1 return;
             }
-            if (num == cony + conyMove) {
-                answer = pos[num];
-                break;
+            if(visited[y][time%2]){
+                return time;
             }
+            queue = q.size();
 
-            int next = 0;
-            for (int i = 0; i < 3; i++) {
-                if (i == 0) {
-                    next = num - 1;
-                } else if (i == 1) {
-                    next = num + 1;
-                } else {
-                    next = num * 2;
+            for(int i=0; i<queue; i++){
+                now = q.poll();
+
+                nowTime = (now[1]+1)%2;
+                nowX = now[0];
+
+                //여기서부터 bakc-1 front+1 jump*2 로 나누어서 계산을 진행할것. 각각 queue에 넣을 것임.
+
+                back = nowX-1;       //-1할 경우
+                if(back == y)return time;
+                if(back>=0 && !visited[back][nowTime]){            //back 범위는 -1 이기 때문에 음수로 가지 않는지 채크
+                    visited[back][nowTime] = true;
+                    q.add(new int[]{back,nowTime});
                 }
 
-                if (next >= 0 && next < 200001 && pos[next]== 0) {
-                    q.add(next);
-                    pos[next] = pos[num]+1;
+                front = nowX +1;      //+1 할 경우
+                if(front == y)return time;
+                if(front<=500000 && !visited[front][nowTime]){    //front의 범위는 +1 이기 때문에 500000을 넘기지 않는지 채크
+                    visited[front][nowTime] = true;
+                    q.add(new int[]{front,nowTime});
+                }
+
+                jump = nowX*2;        //*2 할 경우
+                if(jump == y)return time;
+                if(jump<=500000 && !visited[jump][nowTime]){      //jump의 범위는 *2 이기 때문에 500000을 넘기지 않는지 채크
+                    visited[jump][nowTime] = true;
+                    q.add(new int[]{jump,nowTime});
                 }
             }
         }
+    }
 
-        System.out.println();
-        System.out.println(answer);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int x = Integer.parseInt(st.nextToken());
+        int y = Integer.parseInt(st.nextToken());
+        bfs(x, y);
     }
 }
