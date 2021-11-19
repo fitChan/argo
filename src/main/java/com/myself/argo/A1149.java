@@ -1,44 +1,48 @@
 package com.myself.argo;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class A1149 {
-
-    static int[][] houseColor;
+    static int n = 0;
+    static int R = 0;
+    static int G = 1;
+    static int B = 2;
+    static int[][] price;
     static int[][] DP;
-    static int testCase;
-     static int Red = 0;
-     static int Green = 1;
-     static int Blue = 2;
 
-    public static int sum(int testCase, int color){
-        if(DP[testCase][color] == 0 ){
-            if(color == Red){
-                DP[testCase][Red] = Math.min(sum(testCase-1, Green), sum(testCase-1, Blue)) + houseColor[testCase][Red];
-            }else if(color == Green){
-                DP[testCase][Green] = Math.min(sum(testCase-1, Red), sum(testCase-1, Blue)) + houseColor[testCase][Green];
-            }else if(color == Blue){
-                DP[testCase][Green] = Math.min(sum(testCase-1, Red), sum(testCase-1, Green)) + houseColor[testCase][Blue];
+    public static int solution(int testCase, int color) {
+        if (DP[testCase][color] == 0) {
+            if (color == R) {
+                DP[testCase][R] = Math.min(solution(testCase - 1, G), solution(testCase - 1, B)) + price[testCase][R];
+            } else if (color == G) {
+                DP[testCase][G] = Math.min(solution(testCase - 1, B), solution(testCase - 1, R)) + price[testCase][G];
+            } else if (color == B) {
+                DP[testCase][B] = Math.min(solution(testCase - 1, G), solution(testCase - 1, R)) + price[testCase][B];
             }
-        }return DP[testCase][color];
+        }
+        return DP[testCase][color];
     }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        testCase = sc.nextInt();
-        houseColor = new int[testCase][3];
-        DP = new int[testCase][3];
-
-        for(int i=0; i<testCase; i++) {
-            houseColor[i][0] = sc.nextInt();
-            houseColor[i][1] = sc.nextInt();
-            houseColor[i][2] = sc.nextInt();
+        n = sc.nextInt();
+        price = new int[n][3];
+        DP = new int[n][3];
+        for (int i = 0; i < n; i++) {
+            price[i][0] = sc.nextInt();
+            price[i][1] = sc.nextInt();
+            price[i][2] = sc.nextInt();
         }
-        DP[0][Red] = houseColor[0][Red];
-        DP[0][Green] = houseColor[0][Green];
-        DP[0][Blue] = houseColor[0][Blue];
-        System.out.println();
-        System.out.println(Math.min(sum(testCase-1, Red), Math.min(sum(testCase-1, Green), sum(testCase-1, Blue))));
+
+        DP[0][R] = price[0][R];
+        DP[0][G] = price[0][G];
+        DP[0][B] = price[0][B];
+
+        System.out.println(Math.min(solution(n - 1, R), Math.min(solution(n - 1, G), solution(n - 1, B))));
 
     }
 }
