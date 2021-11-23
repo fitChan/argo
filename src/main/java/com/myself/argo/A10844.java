@@ -10,7 +10,7 @@ public class A10844 {
         }
 
         if(arr[position][number]==null){
-            if(number == 1){
+            if(number == 0){
                 arr[position][number] = solution(position-1, 1);
             }else if(number == 9){
                 arr[position][number] = solution(position-1, 8);
