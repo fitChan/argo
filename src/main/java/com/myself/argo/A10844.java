@@ -3,6 +3,7 @@ package com.myself.argo;
 import java.util.Scanner;
 
 public class A10844 {
+    final static long MOD = 1000000000;
     static Long[][] arr;
     public static Long solution(int position, int number) {
         if(position == 1){
@@ -18,7 +19,7 @@ public class A10844 {
                 arr[position][number] = solution(position-1, number+1)+solution(position-1, number-1);
             }
         }
-        return arr[position][number];
+        return arr[position][number]%MOD;
 
     }
 
@@ -37,7 +38,7 @@ public class A10844 {
         for(int i=1; i<=9; i++){
             result += solution(n,i);
         }
-        System.out.println(result%1000000000);
+        System.out.println(result%MOD);
 
     }
 }
