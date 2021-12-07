@@ -19,6 +19,7 @@ public class A2156 {
 
             for(int i=3; i<glass; i++){
                 dp[i] = Math.max(dp[i-1], Math.max(dp[i-2]+amount[i], dp[i-3]+amount[i-1]+amount[i]));
+                dp[i] = Math.max(dp[i-1], dp[i]);
             }
         }
         System.out.println(dp[glass-1]);
