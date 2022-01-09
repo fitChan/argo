@@ -1,6 +1,5 @@
 package com.myself.argo;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class A12852 {
